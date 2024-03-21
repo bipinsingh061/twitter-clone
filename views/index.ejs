@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter-like App</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Reset some default styles */
+body, h1, h2, h3, ul, p, form {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a font */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 0.7rem 2rem;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  font-weight: bold;
+}
+
+/* Container */
+.container {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+/* Tweet box styles */
+.tweet-box h1 {
+  margin-bottom: 0.5rem;
+}
+
+.tweet-form {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea{
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.tweet-button {
+  padding: 0.5rem 2rem;
+  background-color: #1da1f2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.tweet-button:hover {
+  background-color: #0d8cd9;
+}
+
+/* Feed styles */
+.feed {
+  margin-top: 2rem;
+}
+
+.tweet-list {
+  list-style: none;
+}
+
+.tweet {
+  background-color: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.tweet-author {
+  margin-bottom: 0.5rem;
+}
+
+.tweet-content {
+  margin-bottom: 1rem;
+}
+
+.tweet-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.like-form,
+.comment-form {
+  margin-right: 1rem;
+}
+
+.like-button,
+.comment-button {
+  padding: 0.4rem 1rem;
+  background-color: #1da1f2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.like-button:hover,
+.comment-button:hover {
+  background-color: #0d8cd9;
+}
+
+.comments {
+  margin-top: 1rem;
+}
+
+.comment-list {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.comment {
+  margin-bottom: 0.5rem;
+}
+
+/* Footer styles */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #333;
+  color: #fff;
+}
+
+.footer p {
+  margin: 0;
+}
+  </style>
+
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">App Name</div>
+      <% if (!req.user) { %>
+        <div>
+          <a href="/login" class="nav-link">Login</a>
+          <a href="/signup" class="nav-link">Signup</a>
+          <a href="/logout" class="nav-link">Logout</a>
+        </div>
+      <% } else { %>
+        <div>
+          <a href="/logout" class="nav-link">Logout</a>
+        </div>
+      <% } %>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="tweet-box">
+      <h1>What's happening?</h1>
+      <form action="/tweet" method="POST" class="tweet-form">
+        <textarea name="tweet" rows="2" placeholder="What's happening?" required></textarea>
+        <button type="submit" class="tweet-button">Tweet</button>
+      </form>
+    </section>
+
+    <section class="feed">
+      <h2>Recent Tweets</h2>
+      <% if (tweets.length === 0) { %>
+        <p>No tweets yet.</p>
+      <% } else { %>
+        <ul class="tweet-list">
+          <% tweets.forEach(tweet => { %>
+            <li class="tweet">
+              <div class="tweet-author">
+                <strong><%= tweet.author %>:</strong>
+              </div>
+              <p class="tweet-content"><%= tweet.content %></p>
+              <div class="tweet-actions">
+                <form action="/tweets/<%= tweet._id %>/like" method="POST" class="like-form">
+                  <button type="submit" class="like-button">
+                    LIKE (<%= tweet.likeCount %>)
+                  </button>
+                </form>
+                <div class="comments">
+                  <h3>Comments</h3>
+                  <% if (tweet.comments && tweet.comments.length === 0) { %>
+                    <p>No comments yet.</p>
+                  <% } else if (tweet.comments) { %>
+                    <ul class="comment-list">
+                      <% tweet.comments.forEach(comment => { %>
+                        <li class="comment">
+                          <strong><%= comment.author.email %>:</strong>
+                          <%= comment.content %>
+                        </li>
+                      <% }); %>
+                    </ul>
+                  <% } %>
+                  <form action="/tweets/<%= tweet._id %>/comment" method="POST" class="comment-form">
+                    <input type="text" name="comment" placeholder="Add a comment" required>
+                    <button type="submit" class="comment-button">Comment</button>
+                  </form>
+                </div>
+              </div>
+            </li>
+          <% }); %>
+        </ul>
+      <% } %>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2023 Twitter-like App. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+  

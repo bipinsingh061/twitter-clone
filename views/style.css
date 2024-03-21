@@ -1,0 +1,95 @@
+.like-button {
+    /* Default styling for the like button */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 16px; /* Adjust as needed */
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f8fa;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #1da1f2;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .tweet-form {
+    margin-bottom: 20px;
+  }
+
+  .tweet-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  .tweet-form button {
+    padding: 10px 20px;
+    background-color: #1da1f2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .tweet-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .tweet-item {
+    border-bottom: 1px solid #e6ecf0;
+    padding: 10px 0;
+  }
+
+  .tweet-author {
+    font-weight: bold;
+    color: #14171a;
+  }
+
+  .tweet-content {
+    margin-top: 5px;
+  }
+
+  .like-button {
+    background: none;
+    border: none;
+    color: #657786;
+    cursor: pointer;
+  }
+
+  .comment-form {
+    margin-top: 10px;
+  }
+
+  .comment-form input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .comment-form button {
+    padding: 5px 10px;
+    background-color: #1da1f2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
